@@ -22,11 +22,11 @@ class OneFragment: Fragment(R.layout.fragment_one){
 
         val _binding = FragmentOneBinding.bind(view)
 
-        val _viewModel = OneViewModel(context!!)
+        val _viewModel = OneViewModel(requireContext())
 
-        val _layoutManager = LinearLayoutManager(context!!)
+        val _layoutManager = LinearLayoutManager(context)
         val _dividerItemDecoration =
-            DividerItemDecoration(context!!, _layoutManager.orientation)
+            DividerItemDecoration(context, _layoutManager.orientation)
         val _adapter = CustomAdapter(object : CustomAdapter.OnItemClickListener{
             override fun itemClick(item: item){
                 gotoRepositoryFragment(item)
@@ -85,7 +85,7 @@ class CustomAdapter(private val itemClickListener: OnItemClickListener, ) : List
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     	val _item = getItem(position)
-        (holder.itemView.findViewById<View>(R.id.repositoryNameView) as TextView).text = _item.name
+        (holder.itemView.findViewById<View>(R.id.repositoryNameView) as? TextView)?.text = _item.name
 
     	holder.itemView.setOnClickListener{
      		itemClickListener.itemClick(_item)
